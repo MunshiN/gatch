@@ -1,4 +1,4 @@
 [build]
-  command = "echo 'No build'"
+  command = "echo 'No build needed'"
+  publish = "public"  # Ensuring there's a valid publish directory
   functions = "netlify/functions"
-  publish = "."
