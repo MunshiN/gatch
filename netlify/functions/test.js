@@ -4,7 +4,7 @@ const serverless = require('serverless-http');
 
 const app = express();
 
-app.get('/redirect', (req, res) => {
+app.get('/', (req, res) => {
     const userAgent = req.headers['user-agent'];
     if (/android/i.test(userAgent)) {
         res.redirect('https://play.google.com/store/apps/details?id=com.example.app');
