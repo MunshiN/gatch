@@ -15,8 +15,6 @@ app.get('/redirect', (req, res) => {
     }
 });
 
-app.get('/', (req, res) => {
-    res.redirect('/.netlify/functions/redirect'); // Redirect to the function path
-});
+
 
 module.exports.handler = serverless(app);
