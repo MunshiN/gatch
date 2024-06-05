@@ -1,33 +1,22 @@
+// Using the Netlify Functions runtime
 const express = require('express');
+const serverless = require('serverless-http');
+
 const app = express();
 
-// Regular expressions for device detection
-const androidRegex = /android/i;
-const appleDeviceRegex = /iphone|ipad|ipod/i;
+app.get('/redirect', (req, res) => {
+    const userAgent = req.headers['user-agent'];
+    if (/android/i.test(userAgent)) {
+        res.redirect('https://play.google.com/store/apps/details?id=com.example.app');
+    } else if (/iphone|ipad|ipod/i.test(userAgent)) {
+        res.redirect('https://apps.apple.com/us/app/example-app/id1234567890');
+    } else {
+        res.redirect('https://google.com'); // Fallback URL
+    }
+});
 
 app.get('/', (req, res) => {
-  res.send('Welcome to the Server!');
+    res.redirect('/.netlify/functions/redirect'); // Redirect to the function path
 });
 
-app.get('/redirect', (req, res) => {
-  try {
-    const userAgent = req.headers['user-agent']; // Extract user-agent from request headers
-
-    // Redirect based on user-agent
-    if (androidRegex.test(userAgent)) {
-      res.redirect('https://play.google.com/store/apps/details?id=com.example.app');
-    } else if (appleDeviceRegex.test(userAgent)) {
-      res.redirect('https://apps.apple.com/us/app/example-app/id1234567890');
-    } else {
-      res.redirect('https://google.com'); // Fallback URL
-    }
-  } catch (error) {
-    console.error('Error during redirection:', error);
-    res.status(500).send('An error occurred');
-  }
-});
-
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+module.exports.handler = serverless(app);
