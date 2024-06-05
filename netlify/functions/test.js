@@ -11,7 +11,7 @@ app.get('/', (req, res) => {
     } else if (/iphone|ipad|ipod/i.test(userAgent)) {
         res.redirect('https://apps.apple.com/us/app/keynote/id361285480');
     } else {
-        res.redirect('https://google.com'); // Fallback URL
+        res.redirect('https://play.google.com/store/apps/details?id=com.lutsgames.IdleSuperpowers&pcampaig[…]published_cluster_promotion_battlestar_browse_all_games&hl=en'); // Fallback URL
     }
 });
 
